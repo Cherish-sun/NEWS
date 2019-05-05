@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block left_content %}
+    {% if  items_list %}
+        <div class="notes clearfix" id="authors">
+        {% for item in items_list %}
+                 <li class="clearfix">
+                     <a href="{% url 'item' %}?cid={{ item.categorys.id }}&itemid={{ item.id }}">
+                         {{ item.title }}
+                     </a>&nbsp;&nbsp;
+                 </li>
+        {% endfor %}
+        </div>
+    {% endif %}
+    <div class="article module">
+        <ul id="new_div">
+         {% if  article_list %}
+            {% for article in article_list %}
+              <li class="news">
+                <div>
+                    <div class="flag">推荐</div>
+                    <a href="{% url 'article' %}?id={{ article.id }}" target="_blank"><div class="layer"></div>
+                    <img  src="{{ article.pic }} " class="pic"></a>
+                    <div class="detail">
+                        <div class="dtitle">
+                            <a  href="{% url 'article' %}?id={{ article.id }}" target="_blank"><h2>{{ article.id }}-{{ article.title }}</h2></a>
+                        </div>
+                        <div class="desc">{{ article.content|striptags|safe|slice:"80" }}</div>
+                        <div class="info">
+                            <img src="/static/images/avatar3.png" class="img_small"><span>{{ article.author.username }}</span></a>
+                            <div class="pv">
+                                <span class="push-time">{{ article.publish_date }}</span>
+                                <span class="column"> <a href="/">{{ article.item.title }}</a>&nbsp;</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+           {% endfor %}
+         {% else %}
+         <div class="nodata"><img style="width:200px;padding-left:280px; " src="/static/images/nodata1.png"></div>
+        {% endif %}
+
+         </ul>
+    {% include 'page.html' %}
+    </div>
+
+{% endblock %}

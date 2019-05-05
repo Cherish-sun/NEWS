@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block left_content %}
+     <div class="topnews">
+      <h2>标签{{ request.GET.tag }}</h2>
+      {% for article in article_list %}
+      <div class="blogs">
+        <ul>
+          <h3><a href="{% url 'article' %}?id={{ article.id }}">{{ article.title }}</a></h3>
+          <p><a href="{% url 'article' %}?id={{ article.id }}">{{ article.desc }}</a></p>
+          <p class="autor"><span class="lm f_l">
+              {% for tag in article.tag.all %}
+                  <a href="/">{{ tag.name }}</a>&nbsp;</span>
+              {% endfor %}
+              <span class="dtime f_l">{{ article.date_publish | date:'Y-m-d' }}</span>
+        </ul>
+      </div>
+      {% endfor %}
+    </div>
+
+{% endblock %}

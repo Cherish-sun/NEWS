@@ -1,0 +1,18 @@
+ {% if num_pages > 1 %}
+         <div class="more">
+                <span class="step-links">
+               {% if previous %}
+                      <a href="{{ curr_url }}&page={{previouspage}}">上一页</a>
+               {% endif %}
+
+              <span class="current">
+                      Page {{ page }} of {{  num_pages }}.
+              </span>
+               <span class="current">
+              {% if next %}
+                    <a href="{{ curr_url }}&page={{nextpage}}" class="nextpage">下一页</a>
+                    <a  class="nextpage2"></a>
+              {% endif %}
+              </span>
+         </div>
+ {% endif %}

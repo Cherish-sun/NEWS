@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+{% block left_content %}
+    <div class="article_div module">
+        <ul id="new_div">
+        {% if  article_list %}
+          {% for article in article_list %}
+              <li class="news">
+                <div>
+                    <div class="flag">推荐</div>
+                    <a href="{% url 'article' %}?id={{ article.id }}" target="_blank">
+                    <img  src="{{ article.pic }} " class="pic"></a>
+                    <div class="detail">
+                        <div class="dtitle">
+                            <a  href="{% url 'article' %}?id={{ article.id }}" target="_blank"><h2>{{ article.id }}-{{ article.title }}</h2></a>
+                        </div>
+                        <div class="desc">{{ article.content|striptags|safe|slice:"80" }}</div>
+                        <div class="info">
+                            <img src="/static/images/neter.jpg" class="img_small"><span>{{ article.author.username }}</span>
+                            <div class="pv">
+                               <span class="push-time">{{ article.publish_date |date:"Y-m-d H:i:s"}}</span><span class="column">
+                               <a href="/">{{ article.item.title }}</a>&nbsp;</span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+           {% endfor %}
+        {% else %}
+         <div><img style="width:200px;padding-left:280px; " src="/static/images/nodata1.png"></div>
+        {% endif %}
+         </ul>
+
+    </div>
+    {% include 'page.html' %}
+
+{% endblock %}

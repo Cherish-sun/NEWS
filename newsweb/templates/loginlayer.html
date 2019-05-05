@@ -1,0 +1,98 @@
+<!-- 登录弹出层 -->
+
+<div class="cd-user-modal "  style=" z-index:1999; "> <!-- this is the entire modal form, including the background -->
+		<div class="cd-user-modal-container"> <!-- this is the container wrapper -->
+			<div class="userLogin-title">
+                <span><h2>新闻系统登录</h2></span>
+               <span>
+                   <a class="loginIcon closeBtn" href="javascript:void(0);" >
+                       <i class="close"><img  src="/static/images/close.jpg"></i>
+                   </a>
+               </span>
+            </div>
+
+            <ul class="cd-switcher">
+				<li id="login"><a href="#0" class="">登录</a></li>
+				<li id="signup"><a href="#0" class="">注册</a></li>
+			</ul>
+			<div id="cd-login"> <!-- log in form -->
+				<form class="cd-form"  id="login-form" >
+
+                   <span class="cd-error-message" id="ErrorInfo" >Error message here!</span>
+
+					<p class="fieldset">
+						<label for="sign-email" class="image-replace cd-email">邮箱</label>
+						<input type="text" placeholder="请输入登录帐号" id="username"  name="username" class="full-width has-padding has-border">
+						<span class="cd-error-message" id="signinState" >Error message here!</span>
+					</p>
+					<p class="fieldset">
+						<label for="signin-password" class="image-replace cd-password  ">密码</label>
+						<input  type="password" placeholder="密码" id="password" name="password" class="full-width has-padding has-border">
+						<a class="hide-password" href="#0"></a>
+						<span class="cd-error-message" id="signin_telPassword_error" >Error message here!</span>
+					</p>
+
+
+                   <input type="submit" id="loginsubmit"  value="登录" class="green full-width ">
+
+
+
+				</form>
+
+				<!-- <a href="#0" class="cd-close-form">Close</a> -->
+			</div> <!-- cd-login -->
+
+			<div id="cd-signup" class=""> <!-- sign up form -->
+				<form class="cd-form" method="post"  action="" id="register-form" name="register-form" >
+					<p class="fieldset">
+						<label for="signup-email" class="image-replace cd-email">邮箱</label>
+						<input type="text" placeholder="请输入手机/邮箱" id="email" name="email" class="full-width has-padding has-border">
+						<span class="cd-error-message" id="regIdState">Error message here!</span>
+					</p>
+
+					<p class="fieldset">
+						<label for="signup-password" class="image-replace cd-password">密码</label>
+						<input  type="password" placeholder="密码" id="password" name="password" class="full-width has-padding has-border">
+						<a class="hide-password" href="#0"></a>
+						<span class="cd-error-message" id="register_telPassword_error">Error message here!</span>
+					</p>
+
+					<p class="fieldset">
+						<input type="checkbox" checked="true" id="accept-terms">
+						<label class="accept-terms">我同意<a href="#0">XX平台协议</a></label>
+					</p>
+
+					<p class="fieldset">
+                        <input type="hidden" id="name" name="name" value="name">
+                        <input type="hidden"  id="username" name="username" value="">
+                        <input type="hidden" id="nexturl" name="next" value=""/>
+                         {% csrf_token %}
+						<input type="submit" id="regsubmit"  value="提交" class="green full-width ">
+					</p>
+				</form>
+
+				<!-- <a href="#0" class="cd-close-form">Close</a> -->
+			</div> <!-- cd-signup -->
+
+			<div id="cd-reset-password"> <!-- reset password form -->
+				<p class="cd-form-message">重置密码</p>
+
+				<form class="cd-form">
+					<p class="fieldset">
+						<label for="reset-email" class="image-replace cd-email">邮箱</label>
+						<input type="email" placeholder="E-mail" id="reset-email" class="full-width has-padding has-border">
+						<span class="cd-error-message">Error message here!</span>
+					</p>
+
+					<p class="fieldset">
+						<input type="submit" value="重置密码" class="full-width has-padding">
+					</p>
+				</form>
+
+				<p class="cd-form-bottom-message"><a href="#0">Back to log-in</a></p>
+			</div> <!-- cd-reset-password -->
+			<a class="cd-close-form" href="#0">Close</a>
+		</div> <!-- cd-user-modal-container -->
+	</div>
+ <script src="/static/js/loginlayer.js"></script>
+

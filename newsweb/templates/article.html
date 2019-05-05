@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block left_content %}
+   <div class="articlecss">
+    <div class="title">
+        <h2>{{ article.title }}</h2>
+        <div class="postmeta">
+          <span class="postmeta_author">{{ article.author.username }}</span>
+          <span class="postmeta_category"><a href="" rel="category">{{ article.item.title }}</a></span>
+          <span class="a_ilike">浏览数{{ article.read_num }}</span>
+            <span class="a_ilike">
+            <a  id = 'articlefav'  href="javascript:void(0)">收藏</a>
+          </span>
+          <span class="postmeta_time">{{ article.publish_date | date:'Y-m-d' }}</span>
+        </div>
+    </div>
+        <div class="article">
+         <p> {{ article.content| safe }}</p>
+        </div>
+        <span class="tags">
+            {% for tag in article.tags %}
+            <a href="{% url 'tag' %}?tagid={{ tag.id }}" rel="tag">{{ tag.name }}&nbsp;&nbsp;</a>
+            {% endfor %}
+        </span>
+   </div>
+<script >
+
+  //收藏
+    $('#articlefav').click(function(){
+         userid = $.cookie('user_id');
+         var isfav =  $('#articlefav').html();
+         if (isfav == '已收藏'){
+             return;
+         }
+         if (userid == null){
+              $('.cd-user-modal').addClass('is-visible');
+              $('#cd-login').addClass('is-selected');
+              $('.cd-switcher').children('li').eq(0).children('a').addClass('selected');
+              return;
+         }
+         var var_data = {
+                        "articles": {{ article.id }},
+                        "user":  userid,
+                        "token ": $.cookie('api_token'),
+             }
+             var json_str = JSON.stringify(var_data);
+             $.ajax({
+                        url: "http://127.0.0.1:8005/userFav/",
+                        type: "POST",
+                        data: json_str,
+                        contentType: "application/json",
+                        dataType: "json",
+                        success: function (data) {
+                             setTimeout(function(){
+                                   }, 1000);
+                            //alert(data);
+                            if (data) {
+                                $('#articlefav').html('已收藏');
+                                $form_modal.removeClass('is-visible');
+                            }
+                            else {
+                              // alert(data.msg);
+                               signup_selected();
+                               ErrorInfo.removeClass().addClass("inputerror").html(data.msg);
+                               $('#register-form input[id="email"]').focus();
+                               return false;
+                            }
+                        },
+                        error:function(XMLHttpRequest, textStatus, errorThrown){
+                           //alert(JSON.stringify(XMLHttpRequest) + "\n" + textStatus + "\n" + errorThrown);
+                            //alert(errorThrown);
+                         }
+                })
+             return false;
+    })
+</script>
+{% endblock %}

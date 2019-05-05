@@ -1,0 +1,163 @@
+{% load staticfiles %}
+{% load dictfilter %}
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+<title></title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="{% static 'css/base.css' %}" rel="stylesheet">
+{% block custom_css %}{% endblock %}
+<script type="text/javascript" src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/slide.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.cookie.js' %}"></script>
+{% block custom_js %}{% endblock %}
+
+</head>
+<body>
+  <!--栏目导航-->
+<div class="header">
+    <div class="layout logo">
+        <a href="http://www.careeru.cn/" class="logoimg"><img src="/static/images/careeru.png" class="logoimg"></a>
+        <ul class="nav">
+            <li class="cur"><a href="/">首页</a></li>
+           {% for category in category_list %}
+                {% if category|key:"id" == categoryid %}
+                   <li class="columnnav  cur">
+                {% else %}
+                   <li class="columnnav">
+                {% endif %}
+                     <a href="{% url 'category' %}?cid={{category|key:"id" }}">{{category|key:"title" }}</a>
+                   </li>
+
+           {% endfor %}
+
+        </ul>
+        <div  class="userlogin">
+           <div  id="logined" style="display: none">
+             <span id="navlogout"><a href="javascript:void(0)">注销</a></span>
+             <span id="navprofile"></span>
+          </div>
+          <div  id="nologin">
+              <span id="navregister"><a class="curegister" href="javascript:;">注册</a></span>
+              <span id="navlogin"><a class="ulogin" href="javascript:;" data-status="nologin">登录</a></span>
+          </div>
+     </div>
+        <form  action="{% url 'search' %}" id="Search" name="search_box" method="get" target="_blank" >
+            <input id="searchKey" title="请输入关键词" name="query"  autocomplete="off"  type="text">
+            <input id="searchBtn" value=""  onclick="" aria-pressed="false" type="submit">
+        </form>
+
+    </div>
+</div>
+<!--内容部分-->
+ <div class="layout">
+      <!--左边部分-->
+     {% with  ads=ad_list %}
+      <div class="main">
+          <!--左边轮播广告部分-->
+          <div  class="ad">
+                <div class="ad-inner ">
+                    <div class="item active">
+                          <!--广告大图片-->
+                        <ul class="slidebox" id="" style="display: block;">
+                            <div class="ad_slide">
+                                    <ul id="slidelist" class="slideshow">
+                                        {% for ad in ads %}
+{#                                            {% if ad.adlocation == 'a1' %}#}
+                                            <li style="display: block;">
+                                                <a href="{{ ad.adurl }}" target="_blank" class="ad_imga">
+                                                    <img src="{{ ad.pic }}"  width="880" height="300"></a>
+                                            </li>
+{#                                             {% endif %}#}
+                                        {% endfor %}
+                                    </ul>
+
+                             </div>
+                        </ul>
+                    </div>
+                </div>
+          </div>
+          <!--左边新闻列表部分-->
+          {% block left_content %}{% endblock %}
+      </div>
+      <!--右边部分-->
+      <div class="side">
+          <!--广告-->
+        <div class="author_ad ad_div">
+                    <div  class="ad slide">
+                            <div class="ad-inner star_div">
+                                 {% for ad in ads %}
+                                        {% if ad.adlocation == 'a2' %}
+                                            <div class="item active">
+                                                <a href="{{ ad.adurl }}" target="_blank">
+                                                    <img src="{{ ad.pic }}" alt="" style="width:300px;height:300px;">
+                                                </a>
+                                            </div>
+                                        {% endif %}
+                                 {% endfor %}
+                             </div>
+                    </div>
+        </div>
+        <!--热门新闻-->
+
+        <div class="hot module">
+          <h3 class="subtitle">热门新闻</h3>
+            <ul  class="article_lists">
+                {% for hotactile in hot_articles %}
+                  <li>
+                     <i class="top3">{{ forloop.counter }}</i>
+                     <a href="{% url 'article' %}?id={{ hotactile.id }}">{{ hotactile.title | slice:'15'}}</a>
+                  </li>
+                {% endfor %}
+
+            </ul>
+        </div>
+
+        <!--广告-->
+        <div class="ad2">
+           <ul>
+                {% for ad in ads %}
+                     {% if ad.adlocation == 'a3' %}
+                       <a href="{{ ad.adurl }}" target="_blank">
+                         <li><img src="{{ ad.pic }}" width="300" ></li>
+                       </a>
+                      {% endif %}
+                {% endfor %}
+          </ul>
+        </div>
+        <!--关注我们-->
+        <div class="follow">
+         <div class="subtitle">关注我们</div>
+          <div class="side_list">
+             <img src="/static/images/careerqq0.8.png" >
+          </div>
+
+          <!--ms-main end -->
+        </div>
+      </div>
+      {% endwith %}
+      {%include 'loginlayer.html' %}
+</div>
+  <!--页脚部分-->
+<footer>
+  <p class="ft-copyright"></p>
+ <div role="contentinfo" bosszone="footer" class="tcopyright" id="tcopyright">
+
+    <div class="en">Copyright &copy; 2010- 2018 Careeru.cn All Rights Reserved</div>
+    <div>
+        <a rel="nofollow" target="_blank" href="/">可锐职场出品</a>
+    </div>
+</div>
+</footer>
+<script type="text/javascript">
+   if ($.cookie('user')) {
+       $('#nologin').css('display', 'none');
+       $('#logined').css('display', 'block');
+       $('#navprofile').html($.cookie('user'));
+   };
+</script>
+</body>
+</html>
