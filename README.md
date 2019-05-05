@@ -63,4 +63,5 @@ DATABASES = {
   }
 }
 ```
+news.sql可选，可以自己手动添加新闻信息，也直接导入已存在的新闻信息。
 项目详解可参考：https://www.jianshu.com/nb/34691463
