@@ -63,3 +63,4 @@ DATABASES = {
   }
 }
 ```
+项目详解可参考：https://www.jianshu.com/nb/34691463
