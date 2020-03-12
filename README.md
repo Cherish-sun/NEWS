@@ -12,7 +12,7 @@
 
 •数据库：Mysql5.6
 
-•前端：Div+Css 、ajax 、 Django2.0.3
+•前端：Div+Css 、ajax
 
 •后端：Django2.0.3、djangorestframework(3.8.2)
 
